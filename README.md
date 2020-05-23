@@ -32,5 +32,5 @@ Googlons consider a number to be pretty if it satisfies all of the following pro
 To run test execute the command below: 
 
 ```bash
-docker-compose run php php test/GooglonParserTest.php
+docker-compose run php php tests/GooglonParserTest.php
 ```
