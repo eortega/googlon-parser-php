@@ -1,5 +1,6 @@
 <?php
-//namespace Googlon;
+declare(strict_types=1);
+namespace GooglonParser;
 
 class GooglonParser
 {
@@ -78,12 +79,8 @@ class GooglonParser
      */
     public static function lexicographicalSort(array $words): array
     {
-        $list = $words;
-
-        $sorted = self::radix($list);
-        return self::flat($sorted);
+        return self::radix($words);
     }
-
 
     /**
      *
