@@ -1,4 +1,22 @@
 {
+    "name": "eortega/googlon-parser-php",
+    "description": "A parser for the Googlon Language",
+    "type": "library",
+    "keywords": [
+        "googlon",
+        "parser"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Edgar Ortega",
+            "email": "eortegamartinez@gmail.com",
+            "role": "lead"
+        }
+    ],
+    "require": {
+        "php": "^7.4"
+    },
     "require-dev": {
         "phpunit/phpunit": "^9.0"
     },
