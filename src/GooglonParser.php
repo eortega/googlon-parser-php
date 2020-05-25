@@ -168,9 +168,7 @@ class GooglonParser
      */
     public static function createBucket(): array
     {
-        return array_map(static function ($k) {
-            return [];
-        }, self::LETTERS_WEIGHT);
+        return array_map(fn($k): array => [], self::LETTERS_WEIGHT);
     }
 
     /**
@@ -206,9 +204,8 @@ class GooglonParser
         $value=0;
         $tCount = count($t);
         for ($i=0,$j=1; $i<$tCount; $i++, $j*=self::NUMBER_BASE) {
-            $value+=self::LETTERS_WEIGHT[$t[$i]] * $j;
+            $value += self::LETTERS_WEIGHT[$t[$i]] * $j;
         }
-
         return $value;
     }
 }
