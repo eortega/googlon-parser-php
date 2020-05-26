@@ -20,3 +20,10 @@ services:
       - .:/app
     working_dir: /app
     entrypoint: vendor/bin/phpunit
+  phpinsights:
+    image: php:7.4-cli
+    restart: never
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: vendor/bin/phpinsights
