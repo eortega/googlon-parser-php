@@ -43,6 +43,9 @@ final class GooglonParser
 
     private const NUMBER_BASE = 20;
 
+    /**
+     * @return array<string>
+     */
     public static function tokenize(string $text): array
     {
         return explode(' ', $text);
@@ -55,8 +58,6 @@ final class GooglonParser
      * - And do not contain the letter u.
      *
      * @param String $w
-     *
-     * @return bool
      */
     public static function isPreposition(string $w): bool
     {
@@ -84,8 +85,6 @@ final class GooglonParser
      * then the verb is inflected in its subjunctive form.
      *
      * @param String $w
-     *
-     * @return bool
      */
     public static function isVerb(string $w): bool
     {
@@ -106,8 +105,6 @@ final class GooglonParser
      * then the verb is inflected in its subjunctive form.
      *
      * @param String $w
-     *
-     * @return bool
      */
     public static function isSubjunctiveVerb(string $w): bool
     {
@@ -128,9 +125,9 @@ final class GooglonParser
      * in the Googlon alphabet is different from ours.
      * Their alphabet, in order, is: sxocqnmwpfyheljrdgui.
      *
-     * @param array $words
+     * @param array<string> $words
      *
-     * @return array
+     * @return array<string>
      */
     public static function lexicographicalSort(array $words): array
     {
@@ -138,11 +135,11 @@ final class GooglonParser
     }
 
     /**
-     * @param array $words
+     * @param array<string> $words
      *
-     * @return array
+     * @return array<string>
      */
-    public static function radix(array $words)
+    public static function radix(array $words): array
     {
         $bucket = self::createBucket();
         $maxLength = self::getMaxLengthWord($words);
@@ -163,6 +160,11 @@ final class GooglonParser
         return $words;
     }
 
+    /**
+     * @param array<string, string> $bucket
+     *
+     * @return array<string>
+     */
     public static function flatBucket(array $bucket): array
     {
         $list = [];
@@ -176,9 +178,7 @@ final class GooglonParser
     }
 
     /**
-     * @param array $words
-     *
-     * @return int
+     * @param array<string> $words
      */
     public static function getMaxLengthWord(array $words): int
     {
@@ -196,7 +196,7 @@ final class GooglonParser
     /**
      * Creates an empty bucket based on googlon alphabet
      *
-     * @return array
+     * @return array<null>
      */
     public static function createBucket(): array
     {
@@ -208,10 +208,6 @@ final class GooglonParser
      * if it satisfies all of the following properties:
      *  - it is greater than or equal to 81827
      *  - it is divisible by 3
-     *
-     * @param int $n
-     *
-     * @return bool
      */
     public static function isPrettyNumber(int $n): bool
     {
@@ -234,8 +230,6 @@ final class GooglonParser
      * (which, as we saw, is ordered differently from our alphabet).
      *
      * @param String $w
-     *
-     * @return int
      */
     public static function wordToNumber(string $w): int
     {
