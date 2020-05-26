@@ -108,14 +108,15 @@ final class GooglonParser
      */
     public static function isSubjunctiveVerb(string $w): bool
     {
-        if (self::isVerb($w)) {
-            $t = str_split($w);
-            if (! in_array($t[0], self::FOO_LETTERS)) {
-                return true;
-            }
+        if (! self::isVerb($w)) {
+            return false;
         }
 
-        return false;
+        if (in_array($w[0], self::FOO_LETTERS, true)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
