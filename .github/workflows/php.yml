@@ -8,17 +8,31 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-
     - name: Validate composer.json and composer.lock
       run: composer validate
-
-    - name: Install dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-
-    - name: Execute tests via PHPUnit
-      run: vendor/bin/phpunit
+  phpunit:
+    runs-on: ubuntu-latest
+    name: PHP Unit checks
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: Execute tests via PHPUnit
+        run: vendor/bin/phpunit
+  phpinsights:
+    runs-on: ubuntu-latest
+    name: PHP Insights checks
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+      - name: Install dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: Execute phpinsights
+        run: vendor/bin/phpinsights -n --ansi --format=github-action --min-quality=80 --min-complexity=90 --min-architecture=75 --min-style=95
