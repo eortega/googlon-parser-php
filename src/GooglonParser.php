@@ -49,8 +49,10 @@ final class GooglonParser
     }
 
     /**
-     * The prepositions are the words of exactly 6 letters
-     * which end in a foo letter and do not contain the letter u.
+     * The prepositions are the words of:
+     * - Exactly 6 letters
+     * - End in a foo letter
+     * - And do not contain the letter u.
      *
      * @param String $w
      *
@@ -59,15 +61,25 @@ final class GooglonParser
     public static function isPreposition(string $w): bool
     {
         $t = str_split($w);
-        if ((count($t) === 6) && (! in_array('u', $t)) && in_array($t[count($t) - 1], self::FOO_LETTERS)) {
-            return true;
+        if (count($t) !== 6) {
+            return false;
         }
 
-        return false;
+        if (in_array('u', $t, true)) {
+            return false;
+        }
+
+        if (! in_array($t[count($t) - 1], self::FOO_LETTERS, true)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
-     * Verbs are words of 6 letters or more that end in a bar letter.
+     * Verbs are words of
+     *  - 6 letters or more
+     *  - Ends in a bar letter.
      * Furthermore, if a verb starts in a bar letter,
      * then the verb is inflected in its subjunctive form.
      *
@@ -78,11 +90,15 @@ final class GooglonParser
     public static function isVerb(string $w): bool
     {
         $t = str_split($w);
-        if ((count($t) >= 6) && ! in_array($t[count($t) - 1], self::FOO_LETTERS)) {
-            return true;
+        if (count($t) < 6) {
+            return false;
         }
 
-        return false;
+        if (in_array($t[count($t) - 1], self::FOO_LETTERS, true)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -199,7 +215,7 @@ final class GooglonParser
      */
     public static function isPrettyNumber(int $n): bool
     {
-        return ($n >= 81827) && (($n % 3) === 0);
+        return $n >= 81827 && ($n % 3) === 0;
     }
 
     /**
