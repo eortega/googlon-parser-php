@@ -44,6 +44,32 @@ final class GooglonParser
     private const NUMBER_BASE = 20;
 
     /**
+     * The prepositions are the words of:
+     * - Exactly 6 letters
+     * - End in a foo letter
+     * - Do not contain the letter u.
+     *
+     * @param String $word
+     */
+    public static function isPreposition(string $word): bool
+    {
+        $wordLen = strlen($word);
+        if ($wordLen !== 6) {
+            return false;
+        }
+
+        if (strpos($word, 'u') !== false) {
+            return false;
+        }
+
+        if (! in_array($word[$wordLen - 1], self::FOO_LETTERS, true)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @return array<string>
      */
     public static function tokenize(string $text): array
@@ -52,48 +78,20 @@ final class GooglonParser
     }
 
     /**
-     * The prepositions are the words of:
-     * - Exactly 6 letters
-     * - End in a foo letter
-     * - And do not contain the letter u.
-     *
-     * @param String $w
-     */
-    public static function isPreposition(string $w): bool
-    {
-        $t = str_split($w);
-        if (count($t) !== 6) {
-            return false;
-        }
-
-        if (in_array('u', $t, true)) {
-            return false;
-        }
-
-        if (! in_array($t[count($t) - 1], self::FOO_LETTERS, true)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Verbs are words of
      *  - 6 letters or more
      *  - Ends in a bar letter.
      * Furthermore, if a verb starts in a bar letter,
      * then the verb is inflected in its subjunctive form.
-     *
-     * @param String $w
      */
-    public static function isVerb(string $w): bool
+    public static function isVerb(string $word): bool
     {
-        $t = str_split($w);
-        if (count($t) < 6) {
+        $wordLen = strlen($word);
+        if ($wordLen < 6) {
             return false;
         }
 
-        if (in_array($t[count($t) - 1], self::FOO_LETTERS, true)) {
+        if (in_array($word[$wordLen - 1], self::FOO_LETTERS, true)) {
             return false;
         }
 
@@ -104,15 +102,15 @@ final class GooglonParser
      * If a verb starts in a bar letter,
      * then the verb is inflected in its subjunctive form.
      *
-     * @param String $w
+     * @param String $word
      */
-    public static function isSubjunctiveVerb(string $w): bool
+    public static function isSubjunctiveVerb(string $word): bool
     {
-        if (! self::isVerb($w)) {
+        if (! self::isVerb($word)) {
             return false;
         }
 
-        if (in_array($w[0], self::FOO_LETTERS, true)) {
+        if (in_array($word[0], self::FOO_LETTERS, true)) {
             return false;
         }
 
@@ -147,10 +145,10 @@ final class GooglonParser
         $paddChar = 's';
 
         for ($i = $maxLength - 1; $i >= 0; $i--) {
-            foreach ($words as $w) {
-                $padded = str_pad($w, $maxLength, $paddChar, STR_PAD_RIGHT);
-                $tw = str_split($padded);
-                $bucket[$tw[$i]][] = $w;
+            foreach ($words as $word) {
+                $backfilledWord =
+                    str_pad($word, $maxLength, $paddChar, STR_PAD_RIGHT);
+                $bucket[$backfilledWord[$i]][] = $word;
             }
 
             //make $bucket as a flatten array after each iteration
@@ -210,9 +208,9 @@ final class GooglonParser
      *  - it is greater than or equal to 81827
      *  - it is divisible by 3
      */
-    public static function isPrettyNumber(int $n): bool
+    public static function isPrettyNumber(int $number): bool
     {
-        return $n >= 81827 && ($n % 3) === 0;
+        return $number >= 81827 && ($number % 3) === 0;
     }
 
     /**
@@ -229,16 +227,16 @@ final class GooglonParser
      * The values of the letters are given
      * by the order they appear in the Googlon alphabet
      * (which, as we saw, is ordered differently from our alphabet).
-     *
-     * @param String $w
      */
-    public static function wordToNumber(string $w): int
+    public static function wordToNumber(string $word): int
     {
-        $t = str_split($w);
         $value = 0;
-        $tCount = count($t);
-        for ($i = 0,$j = 1; $i < $tCount; $i++, $j *= self::NUMBER_BASE) {
-            $value += self::LETTERS_WEIGHT[$t[$i]] * $j;
+        $wordLen = strlen($word);
+        $base = 1;
+
+        for ($index = 0; $index < $wordLen; $index++) {
+            $value += self::LETTERS_WEIGHT[$word[$index]] * $base;
+            $base *= self::NUMBER_BASE;
         }
         return $value;
     }
