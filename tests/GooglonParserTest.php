@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 use GooglonParser\GooglonParser;
 use PHPUnit\Framework\TestCase;
 

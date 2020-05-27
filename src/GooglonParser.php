@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace GooglonParser;
 
+use GooglonParser\Algorithms\Sort\Radix;
+
 final class GooglonParser
 {
     /**
@@ -130,76 +132,8 @@ final class GooglonParser
      */
     public static function lexicographicalSort(array $words): array
     {
-        return self::radix($words);
-    }
-
-    /**
-     * @param array<string> $words
-     *
-     * @return array<string>
-     */
-    public static function radix(array $words): array
-    {
-        $bucket = self::createBucket();
-        $maxLength = self::getMaxLengthWord($words);
-        $paddChar = 's';
-
-        for ($i = $maxLength - 1; $i >= 0; $i--) {
-            foreach ($words as $word) {
-                $backfilledWord =
-                    str_pad($word, $maxLength, $paddChar, STR_PAD_RIGHT);
-                $bucket[$backfilledWord[$i]][] = $word;
-            }
-
-            //make $bucket as a flatten array after each iteration
-            $words = self::flatBucket($bucket);
-            $bucket = self::createBucket();
-        }
-
-        return $words;
-    }
-
-    /**
-     * @param array<string, string> $bucket
-     *
-     * @return array<string>
-     */
-    public static function flatBucket(array $bucket): array
-    {
-        $list = [];
-        foreach ($bucket as $letter => $wordsInLetterBucket) {
-            foreach ($wordsInLetterBucket as $word) {
-                $list[] = $word;
-            }
-        }
-
-        return $list;
-    }
-
-    /**
-     * @param array<string> $words
-     */
-    public static function getMaxLengthWord(array $words): int
-    {
-        $largestWord = 0;
-
-        foreach ($words as $word) {
-            $largestWord = strlen($word) > $largestWord ?
-                strlen($word) :
-                $largestWord;
-        }
-
-        return $largestWord;
-    }
-
-    /**
-     * Creates an empty bucket based on googlon alphabet
-     *
-     * @return array<null>
-     */
-    public static function createBucket(): array
-    {
-        return array_map(static fn (): array => [], self::LETTERS_WEIGHT);
+        $radix = new Radix($words, self::LETTERS_WEIGHT, 's');
+        return $radix->sort();
     }
 
     /**
