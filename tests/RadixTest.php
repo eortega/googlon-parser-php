@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
+namespace eortega\GooglonParser\Tests;
 
-use GooglonParser\Algorithms\Sort\Radix;
+use PHPUnit\Framework\TestCase;
+use eortega\GooglonParser\Algorithms\Sort\Radix;
+use ReflectionClass;
 
 class RadixTest extends TestCase
 {

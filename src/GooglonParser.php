@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace GooglonParser;
+namespace eortega\GooglonParser;
 
-use GooglonParser\Algorithms\Sort\Radix;
+use eortega\GooglonParser\Algorithms\Sort\Radix;
 
 final class GooglonParser
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace GooglonParser\Algorithms\Sort;
+namespace eortega\GooglonParser\Algorithms\Sort;
 
 interface SortAlgorithm
 {

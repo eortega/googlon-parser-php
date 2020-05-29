@@ -66,7 +66,7 @@ return [
 
     'config' => [
         \NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class => [
-            'maxComplexity' => 10,
+            'maxComplexity' => 10
         ]
         //  ExampleInsight::class => [
         //      'key' => 'value',

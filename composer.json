@@ -23,7 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "GooglonParser\\": "src/"
+            "eortega\\GooglonParser\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "eortega\\GooglonParser\\Tests\\": "tests/"
         }
     }
 }
