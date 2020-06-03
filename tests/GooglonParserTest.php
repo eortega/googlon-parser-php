@@ -1,7 +1,10 @@
 <?php
 declare(strict_types=1);
-use GooglonParser\GooglonParser;
+
+namespace eortega\GooglonParser\Tests;
+
 use PHPUnit\Framework\TestCase;
+use eortega\GooglonParser\GooglonParser;
 
 class GooglonParserTest extends TestCase
 {
@@ -16,7 +19,7 @@ class GooglonParserTest extends TestCase
         $testCases = self::loadCases();
         foreach ($testCases as $case) {
             $tokens = GooglonParser::tokenize($case['text']);
-            $actualPrepositions = array_filter($tokens, 'GooglonParser\GooglonParser::isPreposition');
+            $actualPrepositions = array_filter($tokens, 'eortega\GooglonParser\GooglonParser::isPreposition');
             self::assertCount($case['e']['propositions'], $actualPrepositions);
         }
     }
@@ -26,7 +29,7 @@ class GooglonParserTest extends TestCase
         $testCases = self::loadCases();
         foreach ($testCases as $case) {
             $tokens = GooglonParser::tokenize($case['text']);
-            $actualVerbs = array_filter($tokens, 'GooglonParser\GooglonParser::isVerb');
+            $actualVerbs = array_filter($tokens, 'eortega\GooglonParser\GooglonParser::isVerb');
             self::assertCount($case['e']['verbs'], $actualVerbs);
         }
     }
@@ -36,7 +39,7 @@ class GooglonParserTest extends TestCase
         $testCases = self::loadCases();
         foreach ($testCases as $case) {
             $tokens = GooglonParser::tokenize($case['text']);
-            $actualSubjVerbs = array_filter($tokens, 'GooglonParser\GooglonParser::isSubjunctiveVerb');
+            $actualSubjVerbs = array_filter($tokens, 'eortega\GooglonParser\GooglonParser::isSubjunctiveVerb');
             self::assertCount($case['e']['subjVerbs'], $actualSubjVerbs);
         }
     }
@@ -46,8 +49,8 @@ class GooglonParserTest extends TestCase
         $testCases = self::loadCases();
         foreach ($testCases as $case) {
             $tokens = GooglonParser::tokenize($case['text']);
-            $numbersList = array_map('GooglonParser\GooglonParser::wordToNumber', $tokens);
-            $prettyNumbers = array_filter($numbersList, 'GooglonParser\GooglonParser::isPrettyNumber');
+            $numbersList = array_map('eortega\GooglonParser\GooglonParser::wordToNumber', $tokens);
+            $prettyNumbers = array_filter($numbersList, 'eortega\GooglonParser\GooglonParser::isPrettyNumber');
             self::assertCount($case['e']['distinctPrettyNumbers'], $prettyNumbers);
         }
     }
